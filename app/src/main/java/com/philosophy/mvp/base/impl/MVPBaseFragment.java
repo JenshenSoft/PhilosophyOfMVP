@@ -1,5 +1,7 @@
 package com.philosophy.mvp.base.impl;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.philosophy.mvp.base.IBaseError;
@@ -9,10 +11,14 @@ import com.philosophy.mvp.base.IBaseView;
 
 public abstract class MVPBaseFragment<View extends IBaseView, Presenter extends IBasePresenter> extends Fragment implements IBaseView {
 
-    private final Presenter presenter;
+    private Presenter presenter;
+
+    protected abstract Class<Presenter> getMVPPresenterClass();
 
     @SuppressWarnings("TryWithIdenticalCatches")
-    public MVPBaseFragment() {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         try {
             presenter = onCreatePresenter();
         } catch (IllegalAccessException e) {
@@ -25,8 +31,6 @@ public abstract class MVPBaseFragment<View extends IBaseView, Presenter extends 
         }
         presenter.attachView(this);
     }
-
-    protected abstract Class<Presenter> getMVPPresenterClass();
 
     @Override
     public void onDestroy() {
