@@ -13,6 +13,7 @@ public abstract class MVPBaseFragment<View extends IBaseView, Presenter extends 
 
     protected final Presenter presenter;
 
+    @SuppressWarnings("TryWithIdenticalCatches")
     public MVPBaseFragment() {
         try {
             presenter = onCreatePresenter();
