@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public abstract class MVPBaseFragment<View extends IBaseView, Presenter extends IBasePresenter> extends Fragment implements IBaseView {
 
-    protected final Presenter presenter;
+    private final Presenter presenter;
 
     public MVPBaseFragment() {
         try {
@@ -30,6 +30,11 @@ public abstract class MVPBaseFragment<View extends IBaseView, Presenter extends 
     protected abstract Class<Presenter> getMVPPresenterClass();
 
     protected abstract View getMVPView();
+
+    @Override
+    public Presenter getPresenter() {
+        return presenter;
+    }
 
     @Override
     public void showLoading() {
