@@ -7,10 +7,9 @@ import com.philosophy.mvp.base.IBaseView;
 
 public abstract class BasePresenter<View extends IBaseView> implements IBasePresenter<View> {
 
-    private final View view;
+    private View view;
 
-    public BasePresenter(View view) {
-        this.view = view;
+    public BasePresenter() {
     }
 
     @Override
@@ -26,6 +25,16 @@ public abstract class BasePresenter<View extends IBaseView> implements IBasePres
     @Override
     public void onDestroy() {
 
+    }
+
+    @Override
+    public void attachView(View view) {
+        this.view = view;
+    }
+
+    @Override
+    public void detachView() {
+        view = null;
     }
 
     @Override

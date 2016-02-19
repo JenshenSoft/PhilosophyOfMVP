@@ -7,8 +7,6 @@ import com.philosophy.mvp.base.IBaseModel;
 import com.philosophy.mvp.base.IBasePresenter;
 import com.philosophy.mvp.base.IBaseView;
 
-import java.lang.reflect.InvocationTargetException;
-
 public abstract class MVPBaseFragment<View extends IBaseView, Presenter extends IBasePresenter> extends Fragment implements IBaseView {
 
     private final Presenter presenter;
@@ -21,16 +19,20 @@ public abstract class MVPBaseFragment<View extends IBaseView, Presenter extends 
             throw new RuntimeException("Can't create presenter", e);
         } catch (java.lang.InstantiationException e) {
             throw new RuntimeException("Can't create presenter", e);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException("Can't create presenter", e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException("Can't create presenter", e);
         }
+        if (presenter == null) {
+            throw new RuntimeException("Presenter can't be null");
+        }
+        presenter.attachView(this);
     }
 
     protected abstract Class<Presenter> getMVPPresenterClass();
 
-    protected abstract View getMVPView();
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.detachView();
+    }
 
     @Override
     public Presenter getPresenter() {
@@ -60,11 +62,7 @@ public abstract class MVPBaseFragment<View extends IBaseView, Presenter extends 
 
     /* private methods */
 
-    private Presenter onCreatePresenter() throws IllegalAccessException, java.lang.InstantiationException, NoSuchMethodException, InvocationTargetException {
-        final View mvpView = getMVPView();
-        if (mvpView == null) {
-            throw new NullPointerException("mvpView cannot to be null");
-        }
-        return getMVPPresenterClass().getConstructor(mvpView.getClass()).newInstance(mvpView);
+    private Presenter onCreatePresenter() throws IllegalAccessException, java.lang.InstantiationException {
+        return getMVPPresenterClass().newInstance();
     }
 }

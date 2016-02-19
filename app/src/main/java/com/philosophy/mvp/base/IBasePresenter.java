@@ -10,6 +10,10 @@ public interface IBasePresenter<View extends IBaseView> {
 
     void onDestroy();
 
+    void attachView(View view);
+
+    void detachView();
+
     boolean isViewAttached();
 
     View getView();

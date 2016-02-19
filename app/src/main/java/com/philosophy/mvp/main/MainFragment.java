@@ -10,9 +10,4 @@ public class MainFragment extends MVPBaseFragment<IMainView, MainPresenter> impl
     public Class<MainPresenter> getMVPPresenterClass() {
         return MainPresenter.class;
     }
-
-    @Override
-    public IMainView getMVPView() {
-        return this;
-    }
 }
