@@ -1,7 +1,5 @@
 package com.philosophy.mvp.base;
 
-public interface IBaseView<M extends IBaseModel, P> {
-
-    void setData(M model);
-
+public interface IBaseView<Model extends IBaseModel, Error extends IBaseError> {
+    void setData(Model model);
 }
