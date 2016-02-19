@@ -1,7 +1,5 @@
 package com.philosophy.mvp.base.impl;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.philosophy.mvp.base.IBaseError;
@@ -13,15 +11,9 @@ import java.lang.reflect.InvocationTargetException;
 
 public abstract class MVPBaseFragment<View extends IBaseView, Presenter extends IBasePresenter> extends Fragment implements IBaseView {
 
-    protected Presenter presenter;
+    protected final Presenter presenter;
 
-    protected abstract Class<Presenter> getMVPPresenterClass();
-
-    protected abstract View getMVPView();
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public MVPBaseFragment() {
         try {
             presenter = onCreatePresenter();
         } catch (IllegalAccessException e) {
@@ -34,6 +26,10 @@ public abstract class MVPBaseFragment<View extends IBaseView, Presenter extends 
             throw new RuntimeException("Can't create presenter", e);
         }
     }
+
+    protected abstract Class<Presenter> getMVPPresenterClass();
+
+    protected abstract View getMVPView();
 
     @Override
     public void showLoading() {

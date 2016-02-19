@@ -7,7 +7,11 @@ import com.philosophy.mvp.base.IBaseView;
 
 public abstract class BasePresenter<View extends IBaseView> implements IBasePresenter<View> {
 
-    private View mView;
+    private final View view;
+
+    public BasePresenter(View view) {
+        this.view = view;
+    }
 
     @Override
     public void onCreate(Bundle arguments, Bundle savedInstanceState) {
@@ -25,22 +29,12 @@ public abstract class BasePresenter<View extends IBaseView> implements IBasePres
     }
 
     @Override
-    public void attachView(View view) {
-        mView = view;
-    }
-
-    @Override
-    public void detachView() {
-        mView = null;
-    }
-
-    @Override
     public boolean isViewAttached() {
-        return mView != null;
+        return view != null;
     }
 
     @Override
     public View getView() {
-        return mView;
+        return view;
     }
 }

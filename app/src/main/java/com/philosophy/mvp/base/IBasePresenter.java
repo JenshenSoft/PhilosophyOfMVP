@@ -4,10 +4,6 @@ import android.os.Bundle;
 
 public interface IBasePresenter<View extends IBaseView> {
 
-    void attachView(View view);
-
-    void detachView();
-
     void onCreate(Bundle arguments, Bundle savedInstanceState);
 
     void onSaveInstanceState(Bundle bundle);
